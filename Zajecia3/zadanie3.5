@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+puts "Hello, Ruby!";
+
+hash = {}
+
+file = File.new("tekst", "r")
+while (line = file.gets)
+	wyraz = line.scan(/\w+/)
+	wyraz.uniq.each do |e|
+		hash[e] = wyraz.count()
+	end
+end
+
+for each in hash
+	puts "Slowo '#{each[0]}' --> #{each[1]}"
+end

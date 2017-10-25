@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+
+puts "Hello, Ruby!";
+
+count = 0
+
+file = File.new("tekst", "r")
+while (line = file.gets)
+	count = count + 1
+end
+
+puts "Plik ma #{count} wierszy"

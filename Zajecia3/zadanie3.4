@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+methods = {}
+while l=gets
+	if/#define (\w+) (\w+)/.match(l) then
+		puts $1 + " "+ $2
+		methods[$1] = $2
+	else
+		methods.each{|k,v|
+			if l.include? k then
+				l=l.gsub(k,v)
+			end}
+		puts l
+	end
+end
+

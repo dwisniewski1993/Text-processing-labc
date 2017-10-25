@@ -1,0 +1,18 @@
+#!/usr/bin/ruby
+
+puts "Hello, Ruby!";
+counter = 0
+
+file = File.new("tekst", "r")
+while (line = file.gets)
+	wyraz = line.split
+    for i in wyraz
+		if ( i =~ /#{ARGV[0]}/ )
+		counter = counter + 1
+		puts line
+		end
+	end
+end
+file.close
+
+puts "Slowo #{ARGV[0]} pojawilo sie w #{counter} wierszach"
