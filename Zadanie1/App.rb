@@ -4,8 +4,18 @@ require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
+URI_REGEX = %r"((?:(?:[^ :/?#]+):)(?://(?:[^ /?#]*))(?:[^ ?#]*)(?:\?(?:[^ #]*))?(?:#(?:[^ ]*))?)"
+
+def remove_uris(text)
+  text.split(URI_REGEX).collect do |s|
+    unless s =~ URI_REGEX
+      s
+    end
+  end.join
+end
+
 argument1 = 'Curie'
-argument2 = 'private'
+argument2 = 'work'
 article_list = Array.new
 
 DATA_DIR = "data-hold/nobel"
@@ -51,14 +61,21 @@ rows[1..-2].each do |row|
 end # done: rows.each
 
 for each in article_list
-  puts each
+  #puts each
+  title = open("#{each}").read.scan(/<title>(.*?)<\/title>/)
   file = File.new("#{each}", "r")
-  puts open("#{each}").read.scan(/<title>(.*?)<\/title>/)
+  puts title
   while (line = file.gets)
-    if (line =~ /#{argument2}/)
-      line = line.gsub(/<\/?[^>]*>/, '').gsub(/\n\n+/, "\n").gsub(/^\n|\n$/, '')
-      puts line
-    end
-  end
+    line = line.gsub(/<\/?[^>]*>/, '').gsub(/\n\n+/, "\n").gsub(/^\n|\n$/, '')
+    if (argument2!=nil)
+      if (line =~ /#{argument2}/)
+        line = remove_uris(line)
+        puts line
+      end
+    else
+      puts "Nie podano drugiego argumentu"
+      break
+    end # done: check arg2
+  end # done: while
   puts "---------------------------------------------"
-end
+end # done: article_list.each
