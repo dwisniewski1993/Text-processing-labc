@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo 'Wykonał: Dominik Wiśniewski 396455'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Zadanie polega na wyciągnięciu z wikipedi konkretnych informacji'
+echo 'W tym wypadku są to informacje o noblistach'
+echo 'Program potrzebuje imienia bądz nazwiska noblisty i jakiegoś słowa kluczowego'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Do prawidłowego działania wymagana jest biblioteka Nokogiri, zainstalować?[t/n]'
+
+read var
+if [ $var == 't' ] 
+then
+	echo 'Instaluje...'
+	sudo gem install nokogiri
+fi
+
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Przykład działania dla słów: Curie i born'
+echo './App.rb Curie born'
+echo 'Press any ENTER to continue'
+read a
+
+ruby App.rb Curie born
+echo 'Uzyskaliśmy paragrafy w których prawdopodobnie jest informacja o urodzeniu noblistów o nazwisku Curie'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Przykład działania dla słów: Einstein i died'
+echo './App.rb Einstein died'
+echo 'Press any ENTER to continue'
+read a
+
+ruby App.rb Einstein died
+echo 'Uzyskaliśmy paragraf o śmierci Einsteina'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Instrukcja ogólna: ./App.rb [imie/nazwisko] [słowo_kluczowe]'
+echo 'Oba parametry muszą być podane'
+echo 'Press any ENTER to continue'
+read a

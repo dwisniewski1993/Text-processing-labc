@@ -14,14 +14,16 @@ def remove_uris(text)
   end.join
 end
 
-argument1 = 'Curie'
-argument2 = 'work'
+argument1 = ARGV[0]
+argument2 = ARGV[1]
 article_list = Array.new
+
+puts "Pierwszy argument to #{argument1}, a drugi to #{argument2}"
 
 DATA_DIR = "data-hold/nobel"
 Dir.mkdir(DATA_DIR) unless File.exists?(DATA_DIR)
 
-BASE_WIKIPEDIA_URL = "http://en.wikipedia.org"
+BASE_WIKIPEDIA_URL = "https://en.wikipedia.org"
 LIST_URL = "#{BASE_WIKIPEDIA_URL}/wiki/List_of_Nobel_laureates"
 
 HEADERS_HASH = {"User-Agent" => "Ruby/#{RUBY_VERSION}"}
