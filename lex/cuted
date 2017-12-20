@@ -1,0 +1,4 @@
+[-,+]?[0-9]+   {cout << "Constants: " << yytext << endl; }
+[,.'"]+        {cout << "Punctuation Chars: " << yytext << endl; }
+[!@#$%^&*()]+  {cout << "Special Chars: " << yytext << endl; }
+[a-zA-Z]+      {cout << "Identifiers: " << yytext << endl; }

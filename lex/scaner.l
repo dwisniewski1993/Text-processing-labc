@@ -1,0 +1,39 @@
+%{
+#include <iostream>
+using namespace std;
+#define YY_DECL extern "C" int yylex()
+%}
+%%
+\void				{cout << "SK_VOID: " << yytext << endl;}
+\main				{cout << "ID: " << yytext << endl;}
+\ i 				{cout << "ID: " << yytext << endl;}
+\(					{cout << "NAW_OTW: " << yytext << endl;}
+\)					{cout << "NAW_ZAM: " << yytext << endl;}
+\for				{cout << "SK_FOR: " << yytext << endl;}
+\{					{cout << "KLAM_OTW: " << yytext << endl;}
+\}					{cout << "KLAM_ZAM: " << yytext << endl;}
+\int				{cout << "SK_INT: " << yytext << endl;}
+\;					{cout << "SRED: " << yytext << endl;}
+\<\=				{cout << "OP_LEQ: " << yytext << endl;}
+\=					{cout << "OP_PRZYP: " << yytext << endl;}
+\+\+				{cout << "OP_INC: " << yytext << endl;}
+[0-9]*			{cout << "STALA_INT: " << yytext << endl;}
+\printf			{cout << "ID: " << yytext << endl;}
+\".*\"			{cout << "STALA_LANC: " << yytext << endl;}
+[\//|\*/|\*|\/*]+.*			{cout << "";}
+%%
+int main(int, char**) {
+	
+	// open a file handle to a particular file:
+	FILE *myfile = fopen("kod.c", "r");
+	// make sure it's valid:
+	if (!myfile) {
+		cout << "I can't open kod.c!" << endl;
+		return -1;
+	}
+	// set lex to read from it instead of defaulting to STDIN:
+	yyin = myfile;
+	
+	// lex through the input:
+	yylex();
+}
