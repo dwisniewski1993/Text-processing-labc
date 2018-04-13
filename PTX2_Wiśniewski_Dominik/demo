@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo 'Wykonał: Dominik Wiśniewski'
+echo 'Zadanie za: 3pkt'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Zadanie polega na stworzeniu korektora niechlujnej polszczyzny.'
+echo 'Uwzględniane są błędy klawiaturowe, ortograficzne, brak wielkiej litery oraz brak znaków diakrytycznych.'
+echo 'Obsługiwane jest 2 mln słów'
+echo '4 rodzaje błędów'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Czy skompilowac?[t/n]'
+
+read var
+if [ $var == 't' ]
+then
+	echo 'Kompiluje...'
+	thraxmakedep corrector.grm
+	make
+fi
+
+echo 'Zaczynam działanie: '
+thraxrewrite-tester --far=corrector.far --rules=corrector
