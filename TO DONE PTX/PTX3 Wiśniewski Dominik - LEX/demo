@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo 'Wykonał: Dominik Wiśniewski'
+echo 'Zadanie za: 2pkt'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Translator podzbioru jednego języka programowania na inny.'
+echo 'W tym przypadku: RUBY -> PYTHON'
+echo 'Objete zostało 5 konstrukcji języka: '
+echo 'wyrażenie IF'
+echo 'pętla FOR'
+echo 'deklaracja funkcji'
+echo 'wywołanie funkcji'
+echo 'definicja klasy'
+echo 'blok instrukcji'
+echo 'Press any ENTER to continue'
+read a
+
+echo 'Zaczynam...'
+
+flex parser.l
+g++ -o myparser lex.yy.c
+./myparser > kod2.py
