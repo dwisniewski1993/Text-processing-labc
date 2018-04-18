@@ -20,5 +20,5 @@ read a
 echo 'Zaczynam...'
 
 flex parser.l
-g++ -o mypaser lex.yy.c
+g++ -o myparser lex.yy.c
 ./myparser > kod2.py

@@ -511,14 +511,12 @@ char *yytext;
 #line 2 "parser.l"
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <iostream>
 
 #define YY_DECL extern "C" int yylex()
-#define MAX_DEPTH 72
 
 int nesting = 0 ;
-unsigned int indent_stack[MAX_DEPTH] ;
+unsigned int indent_stack[32] ;
 unsigned int level = 0 ;
 
 unsigned int first = 1 ;
@@ -528,7 +526,7 @@ using namespace std;
 void process_indent(char* line) ;
 void skip_dots(char* line, int length);
 
-#line 532 "lex.yy.c"
+#line 530 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -749,10 +747,10 @@ YY_DECL
 		}
 
 	{
-#line 29 "parser.l"
+#line 27 "parser.l"
 
 
-#line 756 "lex.yy.c"
+#line 754 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -813,12 +811,12 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 31 "parser.l"
+#line 29 "parser.l"
 {/* Blank lines out */}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 32 "parser.l"
+#line 30 "parser.l"
 {int last = yyleng - 1;
                process_indent(yytext) ;
                while ((last >= 0) &&
@@ -828,37 +826,37 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 39 "parser.l"
-{cout << ""; ECHO; nesting++ ; }
+#line 37 "parser.l"
+{ECHO; nesting++ ; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 40 "parser.l"
-{cout << ""; ECHO; nesting-- ; }
+#line 38 "parser.l"
+{ECHO; nesting-- ; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 42 "parser.l"
+#line 40 "parser.l"
 {cout << "python ";}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 43 "parser.l"
+#line 41 "parser.l"
 {cout << "print ";}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 44 "parser.l"
+#line 42 "parser.l"
 {}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 45 "parser.l"
+#line 43 "parser.l"
 { cout << "()";}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 46 "parser.l"
+#line 44 "parser.l"
 {cout << "elif ";}
 	YY_BREAK
 case 10:
@@ -866,37 +864,37 @@ case 10:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 47 "parser.l"
+#line 45 "parser.l"
 {cout << "range(";
 				skip_dots(yytext, yyleng);
 				cout << ")";}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "parser.l"
+#line 48 "parser.l"
 { ECHO; cout << " ";}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 52 "parser.l"
+#line 50 "parser.l"
 {}
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 53 "parser.l"
+#line 51 "parser.l"
 {}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 56 "parser.l"
+#line 54 "parser.l"
 { process_indent(yytext) ; return 0 ; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 58 "parser.l"
+#line 56 "parser.l"
 ECHO;
 	YY_BREAK
-#line 900 "lex.yy.c"
+#line 898 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1898,7 +1896,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 58 "parser.l"
+#line 56 "parser.l"
 
 
 
@@ -1948,7 +1946,6 @@ void process_indent(char* line) {
   unsigned int indent = white_count(line) ;
 
   if (indent == indent_stack[level]) {
-	if(!first) cout << "";
     first = 0 ;
 	make_tabs(level);
     return ;
@@ -1956,7 +1953,6 @@ void process_indent(char* line) {
 
   if (indent > indent_stack[level]) {
 	cout << ":";
-    assert(level+1 < MAX_DEPTH) ;
     indent_stack[++level] = indent ;
 	make_tabs(level);
     return ;
@@ -1965,10 +1961,7 @@ void process_indent(char* line) {
   while (indent < indent_stack[level]) {
     --level ;
 	make_tabs(level);
-    cout << "" ;
   }
-
-  assert(level >= 0) ;
 }
 
 int main(int argc, char* argv[]) {

@@ -22,3 +22,5 @@ echo 'Zaczynam...'
 flex parser.l
 g++ -o myparser lex.yy.c
 ./myparser > kod2.py
+
+echo 'DONE'

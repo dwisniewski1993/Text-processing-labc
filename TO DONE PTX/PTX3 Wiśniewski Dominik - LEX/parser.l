@@ -1,14 +1,12 @@
 %{
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <iostream>
 
 #define YY_DECL extern "C" int yylex()
-#define MAX_DEPTH 72
 
 int nesting = 0 ;
-unsigned int indent_stack[MAX_DEPTH] ;
+unsigned int indent_stack[32] ;
 unsigned int level = 0 ;
 
 unsigned int first = 1 ;
@@ -36,8 +34,8 @@ INT [0-9]+
                 unput(yytext[last]);
                 last-- ;}}
 
-"("  {cout << ""; ECHO; nesting++ ; }
-")"  {cout << ""; ECHO; nesting-- ; }
+"("  {ECHO; nesting++ ; }
+")"  {ECHO; nesting-- ; }
 
 "ruby" {cout << "python ";}
 "puts" {cout << "print ";}
@@ -103,7 +101,6 @@ void process_indent(char* line) {
   unsigned int indent = white_count(line) ;
 
   if (indent == indent_stack[level]) {
-	if(!first) cout << "";
     first = 0 ;
 	make_tabs(level);
     return ;
@@ -111,7 +108,6 @@ void process_indent(char* line) {
 
   if (indent > indent_stack[level]) {
 	cout << ":";
-    assert(level+1 < MAX_DEPTH) ;
     indent_stack[++level] = indent ;
 	make_tabs(level);
     return ;
@@ -120,10 +116,7 @@ void process_indent(char* line) {
   while (indent < indent_stack[level]) {
     --level ;
 	make_tabs(level);
-    cout << "" ;
   }
-
-  assert(level >= 0) ;
 }
 
 int main(int argc, char* argv[]) {
