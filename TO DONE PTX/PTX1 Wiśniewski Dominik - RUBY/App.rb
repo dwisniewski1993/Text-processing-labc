@@ -35,10 +35,9 @@ for url in article_list
 			puts tr.text
 		end
 		if tr.text =~ /#{argument2}/
-			info = tr.text.split("\n")
-			puts info
+			puts tr.text
 		end
 	counter =+1
 	end
-	puts "\n\n"
+	puts "***************************************************"
 end
